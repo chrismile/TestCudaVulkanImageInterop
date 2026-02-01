@@ -39,3 +39,11 @@
 
 # debug information files
 *.dwo
+
+# CLion
+.idea/*
+*/.idea/*
+cmake-build-*/
+
+# Misc
+/build*
