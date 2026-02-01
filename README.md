@@ -10,6 +10,7 @@ Synchronization can be either done by syncing on the CPU or using semaphores. Bo
 
 Tested system configurations:
 - Ubuntu 24.04, CUDA 12.6, driver 580.126.09, GCC 13.3
+- Windows 11, CUDA 12.8, driver 591.86 & 591.74 & 582.30, MSVC 2022
 
 ## How to build
 
@@ -19,10 +20,4 @@ mkdir build
 cd build
 cmake ..
 cmake --build .
-
-# Linux
-./TestCudaVulkanImageInterop.exe
-
-#Windows
-./TestCudaVulkanImageInterop.exe
 ```

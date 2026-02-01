@@ -82,16 +82,16 @@ void initDevice(sgl::vk::Instance*& instance, sgl::vk::Device*& device) {
 
     // Choose a CUDA device matching the Vulkan device using the CUDA driver API.
     if (!sgl::initializeCudaDeviceApiFunctionTable()) {
-        throw std::runtime_error("Error in main: sgl::initializeCudaDeviceApiFunctionTable() returned false.");
+        sgl::Logfile::get()->throwError("Error in main: sgl::initializeCudaDeviceApiFunctionTable() returned false.");
     }
     CUresult cuResult = sgl::g_cudaDeviceApiFunctionTable.cuInit(0);
     if (cuResult == CUDA_ERROR_NO_DEVICE) {
-        throw std::runtime_error("No CUDA-capable device was found. Disabling CUDA interop support.");
+        sgl::Logfile::get()->throwError("No CUDA-capable device was found. Disabling CUDA interop support.");
     }
     sgl::checkCUresult(cuResult, "Error in cuInit: ");
     CUdevice cuDevice = 0;
     if (!sgl::vk::getMatchingCudaDevice(device, &cuDevice)) {
-        throw std::runtime_error("Error in main: sgl::vk::getMatchingCudaDevice could not find a matching device.");
+        sgl::Logfile::get()->throwError("Error in main: sgl::vk::getMatchingCudaDevice could not find a matching device.");
     }
 
     // Set the selected CUDA driver API device in the runtime API.
@@ -237,7 +237,7 @@ void runTestCase(sgl::vk::Instance* instance, sgl::vk::Device* device) {
         void* hostPtr = stagingBufferVulkan->mapMemory();
         if (!checkIsArrayLinear(formatInfo, imageSettings.width, imageSettings.height, hostPtr, errorMessage)) {
             stagingBufferVulkan->unmapMemory();
-            throw std::runtime_error("Memory content mismatched.");
+            sgl::Logfile::get()->throwError("Memory content mismatched.");
         }
         stagingBufferVulkan->unmapMemory();
     }

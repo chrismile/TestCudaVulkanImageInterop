@@ -67,10 +67,7 @@ list(APPEND SOURCES_SGL "${CMAKE_CURRENT_SOURCE_DIR}/third_party/sgl/src/Graphic
 
 # Interop code.
 list(APPEND SOURCES_SGL "${CMAKE_CURRENT_SOURCE_DIR}/third_party/sgl/src/Graphics/Utils/InteropCuda.cpp")
-list(APPEND SOURCES_SGL "${CMAKE_CURRENT_SOURCE_DIR}/third_party/sgl/src/Graphics/Utils/InteropCompute.cpp")
 list(APPEND SOURCES_SGL "${CMAKE_CURRENT_SOURCE_DIR}/third_party/sgl/src/Graphics/Vulkan/Utils/InteropCuda.cpp")
-list(APPEND SOURCES_SGL "${CMAKE_CURRENT_SOURCE_DIR}/third_party/sgl/src/Graphics/Vulkan/Utils/InteropCompute.cpp")
-list(APPEND SOURCES_SGL "${CMAKE_CURRENT_SOURCE_DIR}/third_party/sgl/src/Graphics/Vulkan/Utils/InteropCompute/ImplCuda.cpp")
 
 add_library(sgl STATIC ${SOURCES_SGL})
 target_include_directories(sgl PUBLIC third_party)
@@ -88,6 +85,7 @@ target_compile_definitions(sgl PUBLIC SUPPORT_CUDA_INTEROP)
 if (WIN32)
     target_compile_definitions(sgl PUBLIC DISABLE_SINGLETON_BOOST_INTERPROCESS)
 endif()
+target_include_directories(sgl PUBLIC ${CUDAToolkit_INCLUDE_DIRS})
 
 if (WIN32)
     set(GLSLANG_SYS_NAME "Windows")
